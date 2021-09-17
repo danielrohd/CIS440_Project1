@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>812</width>
+    <width>630</width>
     <height>875</height>
    </rect>
   </property>
@@ -58,7 +58,7 @@
      <item>
       <widget class="QPushButton" name="pushButton_3">
        <property name="text">
-        <string>PushButton</string>
+        <string>Notifications</string>
        </property>
       </widget>
      </item>
@@ -70,10 +70,16 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>812</width>
+     <width>630</width>
      <height>21</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuHome">
+    <property name="title">
+     <string>Home</string>
+    </property>
+   </widget>
+   <addaction name="menuHome"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
