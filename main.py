@@ -30,6 +30,9 @@ class MainWindow:
     def goNoti(self):
         self.ui.stackedWidget.setCurrentWidget(self.ui.notifications)
 
+
+friends = []
+
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     main_win = MainWindow()

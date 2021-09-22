@@ -3,9 +3,6 @@
 class User:
     "User class holds name,username,password,and email"
 
-
-    global user_list = []
-
     def __init__(self,fname,lname,username,password,email):
         self.fname = fname
         self.lname = lname
