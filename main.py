@@ -21,12 +21,34 @@ def get_user_from_database(username, password):
 
     for first_name, last_name, username, password, email in cursor:
         if first_name is None:
+            # this needs to be fixed to control for if account does not exist
             cnx.close()
             return 0
         else:
             temp_user = userclass.User(first_name, last_name, username, password, email)
             cnx.close()
             return temp_user
+
+
+def get_host_events_from_database(host):
+    """Gets an event object from database and creates an event object"""
+    cnx = mysql.connector.connect(user='fall2021group5', password='group5fall2021',
+                                  host='107.180.1.16',
+                                  database='cis440fall2021group5')
+    cursor = cnx.cursor()
+
+    query = f"SELECT title, date, location, host FROM Events where host='{host}'"
+    cursor.execute(query)
+
+    for title, date, location, host in cursor:
+        if title is None:
+            # this needs to properly handle if host has no events
+            cnx.close()
+            return 0
+        else:
+            temp_event = event_class.Event(title, date, location, host)
+            cnx.close()
+            return temp_event
 
 
 class MainWindow:
@@ -57,11 +79,11 @@ class MainWindow:
 
 friends = []
 
-# if __name__ == '__main__':
-#     app = QApplication(sys.argv)
-#     main_win = MainWindow()
-#     main_win.show()
-#     sys.exit(app.exec_())
+if __name__ == '__main__':
+    app = QApplication(sys.argv)
+    main_win = MainWindow()
+    main_win.show()
+    sys.exit(app.exec_())
 
-user = get_user_from_database('sdfgsfd', 'password123')
+user = get_user_from_database('danielrohd', 'password123')
 print(user.email)
