@@ -31,7 +31,8 @@ def get_user_from_database(username, password):
 
 
 def get_host_events_from_database(host):
-    """Gets an event object from database and creates an event object"""
+    """Gets event objects from database and creates a list of all events with given host"""
+    event_list = []
     cnx = mysql.connector.connect(user='fall2021group5', password='group5fall2021',
                                   host='107.180.1.16',
                                   database='cis440fall2021group5')
@@ -47,8 +48,10 @@ def get_host_events_from_database(host):
             return 0
         else:
             temp_event = event_class.Event(title, date, location, host)
+            event_list.append(temp_event)
             cnx.close()
-            return temp_event
+
+    return event_list
 
 
 class MainWindow:
