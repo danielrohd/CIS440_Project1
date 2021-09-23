@@ -1,8 +1,32 @@
 import sys
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtWidgets import QMainWindow
+import mysql.connector
+import userclass
+import event_class
+
 
 from AppUI import Ui_MainWindow
+
+
+def get_user_from_database(username, password):
+    """Creates a user from the database"""
+    cnx = mysql.connector.connect(user='fall2021group5', password='group5fall2021',
+                                  host='107.180.1.16',
+                                  database='cis440fall2021group5')
+    cursor = cnx.cursor()
+    query = f"SELECT first_name, last_name, username, password, email FROM Users WHERE username='{username}' " \
+            f"and password='{password}' "
+    cursor.execute(query)
+
+    for first_name, last_name, username, password, email in cursor:
+        if first_name is None:
+            cnx.close()
+            return 0
+        else:
+            temp_user = userclass.User(first_name, last_name, username, password, email)
+            cnx.close()
+            return temp_user
 
 
 class MainWindow:
@@ -33,8 +57,11 @@ class MainWindow:
 
 friends = []
 
-if __name__ == '__main__':
-    app = QApplication(sys.argv)
-    main_win = MainWindow()
-    main_win.show()
-    sys.exit(app.exec_())
+# if __name__ == '__main__':
+#     app = QApplication(sys.argv)
+#     main_win = MainWindow()
+#     main_win.show()
+#     sys.exit(app.exec_())
+
+user = get_user_from_database('sdfgsfd', 'password123')
+print(user.email)

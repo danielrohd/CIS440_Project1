@@ -12,49 +12,46 @@ class User:
        
     @property
     def fname(self):
-        return self.fname.capitalize()
+        return self.__fname.capitalize()
 
     @fname.setter
     def fname(self, new_name):
-        if new_name.isalpha():
-            self.fname = new_name
-        else:
-            self.fname = 'Unknown'
+        self.__fname = new_name
 
     @property
     def lname(self):
-        return self.lname.capitalize()
+        return self.__lname.capitalize()
 
     @fname.setter
     def lname(self, new_name):
         if new_name.isalpha():
-            self.lname = new_name
+            self.__lname = new_name
         else:
-            self.lname = 'Unknown'
+            self.__lname = 'Unknown'
 
     @property
     def username(self):
-        return self.username
+        return self.__username
 
     @username.setter
     def username(self, new_username):
-        self.username = new_username
+        self.__username = new_username
        
     @property
     def password(self):
-        return self.password
+        return self.__password
 
     @password.setter
     def password(self, new_password):
-        self.password = new_password
+        self.__password = new_password
 
     @property
     def email(self):
-        return self.email
+        return self.__email
 
     @email.setter
     def email(self, new_email):
-        self.email = new_email
+        self.__email = new_email
 
 
     def add_user(self, username):
