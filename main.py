@@ -146,14 +146,14 @@ class MainWindow:
 
 friends = []
 
-# if __name__ == '__main__':
-#     app = QApplication(sys.argv)
-#     main_win = MainWindow()
-#     main_win.show()
-#     sys.exit(app.exec_())
+if __name__ == '__main__':
+    app = QApplication(sys.argv)
+    main_win = MainWindow()
+    main_win.show()
+    sys.exit(app.exec_())
 
 # user = get_user_from_database('testuser', 'password321')
 # print(user.email)
 
-add_account_to_database('test', 'user', 'testuser', 'password321', 'user@user.com')
+# add_account_to_database('test', 'user', 'testuser', 'password321', 'user@user.com')
 
