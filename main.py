@@ -7,6 +7,8 @@ import event_class
 
 from AppUI import Ui_MainWindow
 
+user_account = 0
+
 
 def get_user_from_database(enteredUsername, enteredPassword):
     """Creates a user from the database"""
@@ -104,6 +106,7 @@ class MainWindow:
         self.ui.noti_tab_3.clicked.connect(self.goNoti)
 
     def clickedLogin(self):
+        global user_account
         self.main_win.show()
 
         # get username and password from text boxes and compare to what is in the database
@@ -121,6 +124,7 @@ class MainWindow:
 
         else:
 
+            user_account = result
             # reset text boxes to be blank
             self.ui.username.setText("")
             self.ui.password.setText("")
@@ -130,19 +134,28 @@ class MainWindow:
             self.goEvent()
 
     def clickedCreateAccount(self):
+        global user_account
         username = self.ui.SU_username.text()
         pw = self.ui.SU_password.text()
         first = self.ui.SU_firstname.text()
         last = self.ui.SU_lastname.text()
 
-        add_account_to_database(first, last, username, pw, "testemail@email.com")
+        result = add_account_to_database(first, last, username, pw, "testemail@email.com")
+        if result != 0:
+            user_account = result
+            self.ui.SU_username.setText("")
+            self.ui.SU_password.setText("")
+            self.ui.SU_firstname.setText("")
+            self.ui.SU_lastname.setText("")
+            self.goEvent()
+        else:
+            self.ui.SU_username.setText("")
+            self.ui.SU_password.setText("")
+            self.ui.SU_firstname.setText("")
+            self.ui.SU_lastname.setText("")
+            # maybe make a pop-up that tells the user that the username is taken already
 
-        self.ui.SU_username.setText("")
-        self.ui.SU_password.setText("")
-        self.ui.SU_firstname.setText("")
-        self.ui.SU_lastname.setText("")
 
-        self.goEvent()
 
     def show(self):
         self.main_win.show()
