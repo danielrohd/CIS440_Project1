@@ -90,6 +90,7 @@ class MainWindow:
 
         self.ui.loginbutton.clicked.connect(self.clickedLogin)
         self.ui.tosignup.clicked.connect(self.goSignUp)
+        self.ui.createaccount.clicked.connect(self.clickedCreateAccount)
         self.ui.events_tab.clicked.connect(self.goEvent)
         self.ui.friends_tab.clicked.connect(self.goFriends)
         self.ui.noti_tab.clicked.connect(self.goNoti)
@@ -128,6 +129,21 @@ class MainWindow:
             # can go to a different window, just did that to show the user it was successful
             self.goEvent()
 
+    def clickedCreateAccount(self):
+        username = self.ui.SU_username.text()
+        pw = self.ui.SU_password.text()
+        first = self.ui.SU_firstname.text()
+        last = self.ui.SU_lastname.text()
+
+        add_account_to_database(first, last, username, pw, "testemail@email.com")
+
+        self.ui.SU_username.setText("")
+        self.ui.SU_password.setText("")
+        self.ui.SU_firstname.setText("")
+        self.ui.SU_lastname.setText("")
+
+        self.goEvent()
+
     def show(self):
         self.main_win.show()
 
@@ -142,7 +158,6 @@ class MainWindow:
 
     def goSignUp(self):
         self.ui.stackedWidget.setCurrentWidget(self.ui.sign_up_page)
-
 
 friends = []
 
