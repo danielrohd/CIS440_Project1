@@ -3,7 +3,7 @@
 class User:
     "User class holds name,username,password,and email"
 
-    def __init__(self,fname,lname,username,password,email):
+    def __init__(self, fname, lname, username, password, email="Null"):
         self.fname = fname
         self.lname = lname
         self.username = username
@@ -22,12 +22,9 @@ class User:
     def lname(self):
         return self.__lname.capitalize()
 
-    @fname.setter
+    @lname.setter
     def lname(self, new_name):
-        if new_name.isalpha():
-            self.__lname = new_name
-        else:
-            self.__lname = 'Unknown'
+        self.__lname = new_name
 
     @property
     def username(self):
