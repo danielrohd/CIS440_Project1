@@ -84,6 +84,25 @@ def add_account_to_database(f_name, l_name, username, pw, email):
         return 0
 
 
+def create_friends_list():
+    """This function will be run on login, and will create a username list of the user's friends"""
+    global user_account, friends
+    cnx = connector.connect(user='fall2021group5', password='group5fall2021',
+                            host='107.180.1.16',
+                            database='cis440fall2021group5')
+    cursor = cnx.cursor(buffered=True)
+
+    query = f'select username1, username2, status from Friends where (username1 = ' \
+            f'"{user_account.username}" or username2 = "{user_account.username}") and status = "Accepted"'
+    cursor.execute(query)
+
+    for username1, username2, status in cursor:
+        if username1 == user_account.username:
+            friends.append(username2)
+        elif username2 == user_account.username:
+            friends.append(username1)
+    cnx.close()
+
 
 class MainWindow:
     def __init__(self):
@@ -180,8 +199,9 @@ if __name__ == '__main__':
     main_win.show()
     sys.exit(app.exec_())
 
-# user = get_user_from_database('testuser', 'password321')
-# print(user.email)
+# user_account = get_user_from_database('danielrohd', 'password123')
+# create_friends_list()
+# print(friends)
 
 # add_account_to_database('test', 'user', 'testuser', 'password321', 'user@user.com')
 
