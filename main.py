@@ -1,4 +1,5 @@
 import sys
+import datetime
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtWidgets import QMainWindow
 from mysql import connector
@@ -8,7 +9,7 @@ import event_class
 from AppUI import Ui_MainWindow
 
 user_account = 0
-
+friends = []
 
 def get_user_from_database(enteredUsername, enteredPassword):
     """Creates a user from the database"""
@@ -155,8 +156,6 @@ class MainWindow:
             self.ui.SU_lastname.setText("")
             # maybe make a pop-up that tells the user that the username is taken already
 
-
-
     def show(self):
         self.main_win.show()
 
@@ -172,7 +171,6 @@ class MainWindow:
     def goSignUp(self):
         self.ui.stackedWidget.setCurrentWidget(self.ui.sign_up_page)
 
-friends = []
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
