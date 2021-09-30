@@ -8,7 +8,9 @@ import event_class
 
 from AppUI import Ui_MainWindow
 
+# this is the user account variable, gets set to a user objet upon login/account creation
 user_account = 0
+# this is a list of usernames, that are friends of the user
 friends = []
 
 def get_user_from_database(enteredUsername, enteredPassword):
