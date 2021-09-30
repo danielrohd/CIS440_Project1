@@ -13,6 +13,7 @@ user_account = 0
 # this is a list of usernames, that are friends of the user
 friends = []
 
+
 def get_user_from_database(enteredUsername, enteredPassword):
     """Creates a user from the database"""
     cnx = connector.connect(user='fall2021group5', password='group5fall2021',
@@ -65,11 +66,8 @@ def add_account_to_database(f_name, l_name, username, pw, email):
                             database='cis440fall2021group5')
     cursor = cnx.cursor(buffered=True)
 
-    check_account = f'SELECT username FROM Users WHERE username="{username}"'
-    cursor.execute(check_account)
-
-    length = cursor.rowcount
-    if length == 0:
+    exists = does_user_exist(username)
+    if not exists:
         add_query = f"INSERT INTO Users (username, password, first_name, last_name, email) VALUES" \
                     f" ('{username}', '{pw}', '{f_name}', '{l_name}', '{email}')"
         cursor.execute(add_query)
@@ -102,6 +100,23 @@ def create_friends_list():
         elif username2 == user_account.username:
             friends.append(username1)
     cnx.close()
+
+
+def does_user_exist(username):
+    """Checks to see if a username already exists"""
+    cnx = connector.connect(user='fall2021group5', password='group5fall2021',
+                            host='107.180.1.16',
+                            database='cis440fall2021group5')
+    cursor = cnx.cursor(buffered=True)
+
+    check_account = f'SELECT username FROM Users WHERE username="{username}"'
+    cursor.execute(check_account)
+
+    length = cursor.rowcount
+    if length == 0:
+        return False
+    else:
+        return True
 
 
 class MainWindow:
