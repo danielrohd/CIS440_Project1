@@ -180,8 +180,9 @@ class MainWindow:
         pw = self.ui.SU_password.text()
         first = self.ui.SU_firstname.text()
         last = self.ui.SU_lastname.text()
+        email = self.ui.SU_email.text()
 
-        result = add_account_to_database(first, last, username, pw, "testemail@email.com")
+        result = add_account_to_database(first, last, username, pw, email)
         if result != 0:
             user_account = result
             self.ui.SU_username.setText("")
