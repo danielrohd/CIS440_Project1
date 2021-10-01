@@ -142,6 +142,10 @@ class MainWindow:
         self.ui.friends_tab_3.clicked.connect(self.goFriends)
         self.ui.noti_tab_3.clicked.connect(self.goNoti)
 
+        self.ui.log_out_button.clicked.connect(self.logOut)
+        self.ui.log_out_button_2.clicked.connect(self.logOut)
+        self.ui.log_out_button_3.clicked.connect(self.logOut)
+
     def clickedLogin(self):
         global user_account
         self.main_win.show()
@@ -206,6 +210,11 @@ class MainWindow:
 
     def goSignUp(self):
         self.ui.stackedWidget.setCurrentWidget(self.ui.sign_up_page)
+
+    def logOut(self):
+        global user_account
+        user_account = 0
+        self.ui.stackedWidget.setCurrentWidget(self.ui.log_in_page)
 
 
 if __name__ == '__main__':

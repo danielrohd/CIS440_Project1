@@ -1,4 +1,4 @@
-# this file is to create the user class and give them certain function and attributes 
+# this file is to create the user class and give them certain function and attributes
 
 class User:
     "User class holds name,username,password,and email"
@@ -9,7 +9,7 @@ class User:
         self.username = username
         self.__password = password
         self.email = email
-       
+
     @property
     def fname(self):
         return self.__fname.capitalize()
@@ -33,7 +33,7 @@ class User:
     @username.setter
     def username(self, new_username):
         self.__username = new_username
-       
+
     @property
     def password(self):
         return self.__password
@@ -50,19 +50,18 @@ class User:
     def email(self, new_email):
         self.__email = new_email
 
-
     def add_user(self, username):
         """Add user to the user list"""
         if username not in self.user_list:
             self.user_list.append(username)
-            
+
     def remove_user(self, username):
         """Removes a guest from the guest list"""
         if username in self.user_list:
             self.user_list.remove(username)
 
 
-        
-       
+
+
 
 

@@ -2,6 +2,7 @@
 
 class Event:
     """Contains information for an individual event."""
+
     def __init__(self, title, date, location, host):
         self.title = title
         self.date = date
@@ -46,7 +47,7 @@ class Event:
         """Adds an account to the guest list"""
         if username not in self.guests:
             self.guests.append(username)
-            
+
     def remove_guest(self, username):
         """Removes a guest from the guest list"""
         if username in self.guests:
