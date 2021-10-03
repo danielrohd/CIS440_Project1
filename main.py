@@ -189,12 +189,14 @@ class MainWindow:
             self.ui.SU_password.setText("")
             self.ui.SU_firstname.setText("")
             self.ui.SU_lastname.setText("")
+            self.ui.SU_email.setText("")
             self.goEvent()
         else:
             self.ui.SU_username.setText("")
             self.ui.SU_password.setText("")
             self.ui.SU_firstname.setText("")
             self.ui.SU_lastname.setText("")
+            self.ui.SU_email.setText("")
             # maybe make a pop-up that tells the user that the username is taken already
 
     def show(self):
