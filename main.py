@@ -167,12 +167,31 @@ def respond_to_friend_request(friend_username, accepted):
 
     if accepted:
         query = f"UPDATE `cis440fall2021group5`.`Friends` SET `status` = 'Accepted' " \
-                f"WHERE `username1` = '{friend_username}' and username2 = '{user_account.username}'"
+                f"WHERE username1 = '{friend_username}' and username2 = '{user_account.username}'"
     else:
         query = f"UPDATE `cis440fall2021group5`.`Friends` SET `status` = 'Denied' " \
-                f"WHERE `username1` = '{friend_username}' and username2 = '{user_account.username}'"
+                f"WHERE username1 = '{friend_username}' and username2 = '{user_account.username}'"
 
     cursor.execute(query)
+    cnx.commit()
+    cursor.close()
+    cnx.close()
+
+
+def delete_friend(friend_username):
+    """Lets user remove friends that are on their friends list"""
+    global friends, user_account
+    cnx = connector.connect(user='fall2021group5', password='group5fall2021',
+                            host='107.180.1.16',
+                            database='cis440fall2021group5')
+    cursor = cnx.cursor(buffered=True)
+
+    delete_query = f"DELETE FROM `cis440fall2021group5`.`Friends` WHERE " \
+                   f"(username1 = '{user_account.username}' and username2 = '{friend_username}') or " \
+                   f"(username1 = '{friend_username}' and username2 = '{user_account.username}'"
+    cursor.execute(delete_query)
+    friends.remove(friend_username)
+
     cnx.commit()
     cursor.close()
     cnx.close()
