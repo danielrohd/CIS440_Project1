@@ -168,10 +168,10 @@ def respond_to_friend_request(friend_username, accepted):
     cursor = cnx.cursor(buffered=True)
 
     if accepted:
-        query = f"UPDATE `cis440fall2021group5`.`Friends` SET `status` = 'Accepted'" \
+        query = f"UPDATE cis440fall2021group5.Friends SET status = 'Accepted'" \
                 f"WHERE username1 = '{friend_username}' and username2 = '{user_account.username}'"
     else:
-        query = f"UPDATE `cis440fall2021group5`.`Friends` SET `status` = 'Denied'" \
+        query = f"UPDATE cis440fall2021group5.Friends SET status = 'Denied'" \
                 f"WHERE username1 = '{friend_username}' and username2 = '{user_account.username}'"
 
     cursor.execute(query)
@@ -334,6 +334,8 @@ class MainWindow:
 
     def goEvent(self):
         self.ui.stackedWidget.setCurrentWidget(self.ui.event_page)
+        self.ui.suggested_friend_list_widget.clear()
+        self.ui.flist_widget.clear()
 
     def goFriends(self):
         self.ui.stackedWidget.setCurrentWidget(self.ui.friends_page)
@@ -342,6 +344,8 @@ class MainWindow:
 
     def goNoti(self):
         self.ui.stackedWidget.setCurrentWidget(self.ui.notis_page)
+        self.ui.suggested_friend_list_widget.clear()
+        self.ui.flist_widget.clear()
 
     def goSignUp(self):
         self.ui.stackedWidget.setCurrentWidget(self.ui.sign_up_page)
@@ -357,13 +361,13 @@ class MainWindow:
     def addFriendButton(self):
 
         print('hey')
-        #usernameEntered = self.ui.uname_addfriend.text()
-        #result = send_friend_request(usernameEntered)
-        #print(result)
-        #if usernameEntered == 1:
-            #print('yes')
-        #else:
-            #print('no')
+        usernameEntered = self.ui.uname_addfriend.text()
+        result = send_friend_request(usernameEntered)
+        print(result)
+        if usernameEntered == 1:
+            print('yes')
+        else:
+            print('no')
 
 
 if __name__ == '__main__':
