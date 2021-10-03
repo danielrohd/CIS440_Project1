@@ -298,6 +298,7 @@ class MainWindow:
             # goes to event window once successfully logged in
             # can go to a different window, just did that to show the user it was successful
             self.goEvent()
+            create_friends_list()
 
     def clickedCreateAccount(self):
         global user_account
@@ -333,6 +334,7 @@ class MainWindow:
 
     def goFriends(self):
         self.ui.stackedWidget.setCurrentWidget(self.ui.friends_page)
+        self.ui.flist_widget.addItems(friends)
 
     def goNoti(self):
         self.ui.stackedWidget.setCurrentWidget(self.ui.notis_page)
