@@ -14,6 +14,8 @@ user_account = 0
 friends = []
 # list of usernames that have pending requests for the user to respond to
 pending_friends = []
+# list of usernames who have mutual friends with the user
+friends_of_friends = []
 
 
 def get_user_from_database(enteredUsername, enteredPassword):
@@ -197,6 +199,24 @@ def delete_friend(friend_username):
     cnx.close()
 
 
+def find_friends_of_friends():
+    global friends, friends_of_friends
+    cnx = connector.connect(user='fall2021group5', password='group5fall2021',
+                            host='107.180.1.16',
+                            database='cis440fall2021group5')
+    cursor = cnx.cursor(buffered=True)
+
+    for f in friends:
+        query = f"SELECT username1, username2, status FROM Friends where (username1 = '{f}' or username2 = '{f}') " \
+                f"and status = 'Accepted'"
+        cursor.execute(query)
+        for username1, username2, status in cursor:
+            if username1 == f and username2 not in friends_of_friends and username2 not in friends:
+                friends_of_friends.append(username2)
+            elif username2 == f and username1 not in friends_of_friends and username1 not in friends:
+                friends_of_friends.append(username1)
+
+
 def does_user_exist(username):
     """Checks to see if a username already exists"""
     cnx = connector.connect(user='fall2021group5', password='group5fall2021',
@@ -218,6 +238,7 @@ def refresh_feed():
     """Calls all functions that refresh feed, such as friends, friend requests, or events"""
     create_friends_list()
     find_friend_requests()
+    find_friends_of_friends()
 
 
 class MainWindow:
