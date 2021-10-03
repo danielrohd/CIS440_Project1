@@ -137,9 +137,9 @@ def send_friend_request(entered_username):
     exists = does_user_exist(entered_username)
 
     # checking if friend request has been sent previously
-    check_query = f"SELECT username1, username2 from Friends WHERE " \
+    check_query = f"SELECT username1, username2 FROM Friends WHERE " \
                   f"(username1 = '{user_account.username}' and username2 = '{entered_username}') or " \
-                  f"(username1 = '{entered_username}' and username2 = '{user_account.username}'"
+                  f"(username1 = '{entered_username}' and username2 = '{user_account.username}')"
     cursor.execute(check_query)
     length = cursor.rowcount
     if length != 0:
@@ -364,7 +364,7 @@ class MainWindow:
         usernameEntered = self.ui.uname_addfriend.text()
         result = send_friend_request(usernameEntered)
         print(result)
-        if usernameEntered == 1:
+        if result == 1:
             print('yes')
         else:
             print('no')
