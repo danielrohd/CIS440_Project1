@@ -168,10 +168,10 @@ def respond_to_friend_request(friend_username, accepted):
     cursor = cnx.cursor(buffered=True)
 
     if accepted:
-        query = f"UPDATE `cis440fall2021group5`.`Friends` SET `status` = 'Accepted' " \
+        query = f"UPDATE `cis440fall2021group5`.`Friends` SET `status` = 'Accepted'" \
                 f"WHERE username1 = '{friend_username}' and username2 = '{user_account.username}'"
     else:
-        query = f"UPDATE `cis440fall2021group5`.`Friends` SET `status` = 'Denied' " \
+        query = f"UPDATE `cis440fall2021group5`.`Friends` SET `status` = 'Denied'" \
                 f"WHERE username1 = '{friend_username}' and username2 = '{user_account.username}'"
 
     cursor.execute(query)
@@ -211,9 +211,11 @@ def find_friends_of_friends():
                 f"and status = 'Accepted'"
         cursor.execute(query)
         for username1, username2, status in cursor:
-            if username1 == f and username2 not in friends_of_friends and username2 not in friends:
+            if username1 == f and username2 not in friends_of_friends and username2 not in friends\
+                    and username2 != user_account.username:
                 friends_of_friends.append(username2)
-            elif username2 == f and username1 not in friends_of_friends and username1 not in friends:
+            elif username2 == f and username1 not in friends_of_friends and username1 not in friends \
+                    and username1 != user_account.username:
                 friends_of_friends.append(username1)
 
     cnx.close()
@@ -257,6 +259,7 @@ class MainWindow:
         self.ui.events_tab.clicked.connect(self.goEvent)
         self.ui.friends_tab.clicked.connect(self.goFriends)
         self.ui.noti_tab.clicked.connect(self.goNoti)
+        self.ui.addfriend_button.clicked.connect(self.addFriendButton)
 
         self.ui.events_tab_2.clicked.connect(self.goEvent)
         self.ui.friends_tab_2.clicked.connect(self.goFriends)
@@ -335,6 +338,7 @@ class MainWindow:
     def goFriends(self):
         self.ui.stackedWidget.setCurrentWidget(self.ui.friends_page)
         self.ui.flist_widget.addItems(friends)
+        self.ui.suggested_friend_list_widget.addItems(friends_of_friends)
 
     def goNoti(self):
         self.ui.stackedWidget.setCurrentWidget(self.ui.notis_page)
@@ -349,6 +353,17 @@ class MainWindow:
         pending_friends = []
         friends_of_friends = []
         self.ui.stackedWidget.setCurrentWidget(self.ui.log_in_page)
+
+    def addFriendButton(self):
+
+        print('hey')
+        #usernameEntered = self.ui.uname_addfriend.text()
+        #result = send_friend_request(usernameEntered)
+        #print(result)
+        #if usernameEntered == 1:
+            #print('yes')
+        #else:
+            #print('no')
 
 
 if __name__ == '__main__':
