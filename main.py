@@ -216,6 +216,8 @@ def find_friends_of_friends():
             elif username2 == f and username1 not in friends_of_friends and username1 not in friends:
                 friends_of_friends.append(username1)
 
+    cnx.close()
+
 
 def does_user_exist(username):
     """Checks to see if a username already exists"""
