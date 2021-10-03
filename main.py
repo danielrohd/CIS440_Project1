@@ -10,8 +10,10 @@ from AppUI import Ui_MainWindow
 
 # this is the user account variable, gets set to a user objet upon login/account creation
 user_account = 0
-# this is a list of usernames, that are friends of the user
+# this is a list of usernames that are friends of the user
 friends = []
+# list of usernames that have pending requests for the user to respond to
+pending_friends = []
 
 
 def get_user_from_database(enteredUsername, enteredPassword):
@@ -79,12 +81,14 @@ def add_account_to_database(f_name, l_name, username, pw, email):
     else:
         # if this else executes, this means the account already exists
         # add a pop-up here that lets the user know the name is taken
+        cnx.close()
         return 0
 
 
 def create_friends_list():
     """This function will be run on login, and will create a username list of the user's friends"""
     global user_account, friends
+    friends = []
     cnx = connector.connect(user='fall2021group5', password='group5fall2021',
                             host='107.180.1.16',
                             database='cis440fall2021group5')
@@ -99,6 +103,78 @@ def create_friends_list():
             friends.append(username2)
         elif username2 == user_account.username:
             friends.append(username1)
+    cnx.close()
+
+
+def find_friend_requests():
+    """Creates a list of all pending friend requests for the signed-in user"""
+    global user_account, pending_friends
+    pending_friends = []
+    cnx = connector.connect(user='fall2021group5', password='group5fall2021',
+                            host='107.180.1.16',
+                            database='cis440fall2021group5')
+    cursor = cnx.cursor(buffered=True)
+
+    query = f'select username1, username2, status from Friends where ' \
+            f'username2 = "{user_account.username}" and status = "Pending"'
+    cursor.execute(query)
+
+    for username1, username2, status in cursor:
+        pending_friends.append(username1)
+    cnx.close()
+
+
+def send_friend_request(entered_username):
+    """Sends a friend request to the user entered if the username exists and returns 1, otherwise returns 0"""
+    global user_account
+    cnx = connector.connect(user='fall2021group5', password='group5fall2021',
+                            host='107.180.1.16',
+                            database='cis440fall2021group5')
+    cursor = cnx.cursor(buffered=True)
+
+    exists = does_user_exist(entered_username)
+
+    # checking if friend request has been sent previously
+    check_query = f"SELECT username1, username2 from Friends WHERE " \
+                  f"(username1 = '{user_account.username}' and username2 = '{entered_username}') or " \
+                  f"(username1 = '{entered_username}' and username2 = '{user_account.username}'"
+    cursor.execute(check_query)
+    length = cursor.rowcount
+    if length != 0:
+        cnx.close()
+        return 0
+
+    if exists:
+        add_query = f"INSERT INTO Friends (username1, username2, status) VALUES " \
+                    f"('{user_account.username}', '{entered_username}', 'Pending')"
+        cursor.execute(add_query)
+        cnx.commit()
+        cursor.close()
+        cnx.close()
+        return 1
+    else:
+        cnx.close()
+        return 0
+
+
+def respond_to_friend_request(friend_username, accepted):
+    """Accepts a friend request if accepted == True, otherwise denies"""
+    global user_account
+    cnx = connector.connect(user='fall2021group5', password='group5fall2021',
+                            host='107.180.1.16',
+                            database='cis440fall2021group5')
+    cursor = cnx.cursor(buffered=True)
+
+    if accepted:
+        query = f"UPDATE `cis440fall2021group5`.`Friends` SET `status` = 'Accepted' " \
+                f"WHERE `username1` = '{friend_username}' and username2 = '{user_account.username}'"
+    else:
+        query = f"UPDATE `cis440fall2021group5`.`Friends` SET `status` = 'Denied' " \
+                f"WHERE `username1` = '{friend_username}' and username2 = '{user_account.username}'"
+
+    cursor.execute(query)
+    cnx.commit()
+    cursor.close()
     cnx.close()
 
 
@@ -117,6 +193,12 @@ def does_user_exist(username):
         return False
     else:
         return True
+
+
+def refresh_feed():
+    """Calls all functions that refresh feed, such as friends, friend requests, or events"""
+    create_friends_list()
+    find_friend_requests()
 
 
 class MainWindow:
@@ -166,6 +248,7 @@ class MainWindow:
         else:
 
             user_account = result
+            refresh_feed()
             # reset text boxes to be blank
             self.ui.username.setText("")
             self.ui.password.setText("")
@@ -185,6 +268,7 @@ class MainWindow:
         result = add_account_to_database(first, last, username, pw, email)
         if result != 0:
             user_account = result
+            refresh_feed()
             self.ui.SU_username.setText("")
             self.ui.SU_password.setText("")
             self.ui.SU_firstname.setText("")
