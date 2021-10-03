@@ -339,10 +339,11 @@ class MainWindow:
         self.ui.stackedWidget.setCurrentWidget(self.ui.sign_up_page)
 
     def logOut(self):
-        global user_account, friends, pending_friends
+        global user_account, friends, pending_friends, friends_of_friends
         user_account = 0
         friends = []
         pending_friends = []
+        friends_of_friends = []
         self.ui.stackedWidget.setCurrentWidget(self.ui.log_in_page)
 
 
