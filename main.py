@@ -245,7 +245,9 @@ def find_available_events():
             for eventID, title, date, location, host in cursor:
                 temp_event = event_class.Event(eventID, title, date, location, host)
                 temp_event.guests = get_guest_list(eventID)
-                if any(x.event_id == eventID for x in available_events):
+                # if any(x.event_id == eventID for x in available_events):
+                    # available_events.append(temp_event)
+                if temp_event not in available_events:
                     available_events.append(temp_event)
     available_events.sort(key=lambda x: x.date)
 
