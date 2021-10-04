@@ -3,7 +3,8 @@
 class Event:
     """Contains information for an individual event."""
 
-    def __init__(self, title, date, location, host):
+    def __init__(self, event_id, title, date, location, host):
+        self.event_id = event_id
         self.title = title
         self.date = date
         self.location = location
@@ -11,6 +12,14 @@ class Event:
         self.guests = []
 
     # Properties and setters
+    @property
+    def event_id(self):
+        return self.__event_id
+
+    @event_id.setter
+    def event_id(self, e_id):
+        self.__event_id = e_id
+
     @property
     def title(self):
         return self.__title
