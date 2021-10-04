@@ -225,6 +225,7 @@ def find_friends_of_friends():
 
 
 def find_available_events():
+    """Finds all events that were created by the user, their friends, and friends of friends"""
     global available_events
     connections = friends + friends_of_friends + user_account.username
     cnx = connector.connect(user='fall2021group5', password='group5fall2021',
@@ -239,6 +240,23 @@ def find_available_events():
             temp_event = event_class.Event(eventID, title, date, location, host)
             available_events.append(temp_event)
     available_events.sort(key=lambda x: x.date)
+
+
+def create_event(title, date, location):
+    """Lets users create an event and upload it to the database"""
+    cnx = connector.connect(user='fall2021group5', password='group5fall2021',
+                            host='107.180.1.16',
+                            database='cis440fall2021group5')
+    cursor = cnx.cursor(buffered=True)
+
+    creation_query = f"INSERT INTO Events (title, date, location, host) VALUES" \
+                     f"('{title}', '{date}', '{location}', '{user_account.username}')"
+    cursor.execute(creation_query)
+
+    cnx.commit()
+    cursor.close()
+    cnx.close()
+
 
 def does_user_exist(username):
     """Checks to see if a username already exists"""
