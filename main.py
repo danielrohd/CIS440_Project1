@@ -372,7 +372,7 @@ class MainWindow:
         self.ui.addEventButton.clicked.connect(self.goEventCreation)
         self.ui.backToEventsButton.clicked.connect(self.goEvent)
         self.ui.backToLoginButton.clicked.connect(self.logOut)
-        self.ui.publishEventButton.clicked.connect(self.createEvent())
+        self.ui.publishEventButton.clicked.connect(self.createEvent)
 
     def clickedLogin(self):
         global user_account
@@ -440,8 +440,6 @@ class MainWindow:
         self.ui.flist_widget.clear()
         find_available_events()
 
-
-
         self.ui.eventTable.setRowCount(len(available_events))
         row = 0
 
@@ -503,7 +501,6 @@ class MainWindow:
             self.ui.uname_addfriend.setText("")
 
 
-
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     main_win = MainWindow()
@@ -515,4 +512,3 @@ if __name__ == '__main__':
 # print(friends)
 
 # add_account_to_database('test', 'user', 'testuser', 'password321', 'user@user.com')
-
