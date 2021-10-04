@@ -372,6 +372,7 @@ class MainWindow:
         self.ui.addEventButton.clicked.connect(self.goEventCreation)
         self.ui.backToEventsButton.clicked.connect(self.goEvent)
         self.ui.backToLoginButton.clicked.connect(self.logOut)
+        self.ui.publishEventButton.clicked.connect(self.createEvent())
 
     def clickedLogin(self):
         global user_account
@@ -469,6 +470,10 @@ class MainWindow:
 
     def goSignUp(self):
         self.ui.stackedWidget.setCurrentWidget(self.ui.sign_up_page)
+
+    def createEvent(self):
+        print('hey')
+
 
     def logOut(self):
         global user_account, friends, pending_friends, friends_of_friends
