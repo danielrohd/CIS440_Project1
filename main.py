@@ -448,6 +448,10 @@ class MainWindow:
         if result == 1:
             self.ui.add_friend_header.setText("Friend Request Sent!")
             print('yes')
+        elif result == 2:
+            self.ui.add_friend_header.setText("A request already exists with that user!")
+            self.ui.uname_addfriend.setText("")
+            print('no')
         else:
             self.ui.add_friend_header.setText("This isn't a valid username, try again!")
             self.ui.uname_addfriend.setText("")
