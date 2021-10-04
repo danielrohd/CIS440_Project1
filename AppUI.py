@@ -198,7 +198,7 @@ class Ui_MainWindow(object):
         self.location = QtWidgets.QLineEdit(self.create_event_page)
         self.location.setGeometry(QtCore.QRect(170, 110, 201, 20))
         self.location.setObjectName("location")
-        self.description = QtWidgets.QTextEdit(self.create_event_page)
+        self.description = QtWidgets.QLineEdit(self.create_event_page)
         self.description.setGeometry(QtCore.QRect(170, 160, 201, 51))
         self.description.setObjectName("description")
         self.publishEventButton = QtWidgets.QPushButton(self.create_event_page)
