@@ -264,7 +264,7 @@ def get_guest_list(event_id):
 
 
 def modify_guest_list(event_id):
-    """Either adds the user as a guest, or removes them if they are already a guest"""
+    """Either adds the user as a guest and returns 1, or removes them if they are already a guest and returns 0"""
     cnx = connector.connect(user='fall2021group5', password='group5fall2021',
                             host='107.180.1.16',
                             database='cis440fall2021group5')
@@ -272,9 +272,24 @@ def modify_guest_list(event_id):
 
     check_query = f"SELECT * from Guests WHERE userID = '{user_account.username}' and eventID = '{event_id}'"
     cursor.execute(check_query)
+    length = cursor.length
 
+    if length == 0:
+        query = f"INSERT INTO Guests (userID, eventID) VALUES ('{user_account.username}', '{event_id}')"
+        cursor.execute(query)
 
-    query = f"INSERT INTO Guests (userID, eventID) VALUES ('{user_account.username}', '{event_id}')"
+        cnx.commit()
+        cursor.close()
+        cnx.close()
+        return 1
+    elif length == 1:
+        query = f"DELETE FROM Guests WHERE userID = '{user_account.username}' and eventID = '{event_id}'"
+        cursor.execute(query)
+
+        cnx.commit()
+        cursor.close()
+        cnx.close()
+        return 0
 
 
 def create_event(title, date, location):
