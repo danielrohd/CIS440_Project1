@@ -276,6 +276,8 @@ class MainWindow:
         self.ui.log_out_button_3.clicked.connect(self.logOut)
 
         self.ui.addEventButton.clicked.connect(self.goEventCreation)
+        self.ui.backToEventsButton.clicked.connect(self.goEvent)
+        self.ui.backToLoginButton.clicked.connect(self.logOut)
 
     def clickedLogin(self):
         global user_account
