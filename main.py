@@ -6,6 +6,7 @@ from PyQt5.QtWidgets import QTableWidget
 from mysql import connector
 import userclass
 import event_class
+import datetime
 
 from AppUI import Ui_MainWindow
 
@@ -231,6 +232,7 @@ def find_friends_of_friends():
 def find_available_events():
     """Finds all events that were created by the user, their friends, and friends of friends"""
     global available_events
+    available_events = []
     connections = friends + friends_of_friends
     connections.append(user_account.username)
     cnx = connector.connect(user='fall2021group5', password='group5fall2021',
@@ -240,7 +242,7 @@ def find_available_events():
     for f in connections:
         query = f"SELECT eventID, title, date, location, host FROM Events WHERE host = '{f}'"
         cursor.execute(query)
-        length = cursor.length
+        length = cursor.rowcount
         if length > 0:
             for eventID, title, date, location, host in cursor:
                 temp_event = event_class.Event(eventID, title, date, location, host)
@@ -435,16 +437,21 @@ class MainWindow:
         self.ui.stackedWidget.setCurrentWidget(self.ui.event_page)
         self.ui.suggested_friend_list_widget.clear()
         self.ui.flist_widget.clear()
+        find_available_events()
 
-        #rowPosition = self.ui.eventTable.rowCount()
-        #self.ui.eventTable.insertRow(rowPosition)
+
+
         self.ui.eventTable.setRowCount(len(available_events))
         row = 0
 
         for event in available_events:
-            rowPosition = self.ui.eventTable.rowCount()
-            self.ui.eventTable.insertRow(rowPosition)
-            self.ui.eventTable.setItem(rowPosition, 0, QTableWidgetItem("hey"))
+
+            self.ui.eventTable.setItem(row, 0, QTableWidgetItem(event.title))
+
+            date = str(event.date)
+            self.ui.eventTable.setItem(row, 1, QTableWidgetItem(date))
+            self.ui.eventTable.setItem(row, 2, QTableWidgetItem(event.location))
+            self.ui.eventTable.setItem(row, 3, QTableWidgetItem(event.host))
             row += 1
 
 
