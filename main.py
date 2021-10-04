@@ -144,7 +144,8 @@ def send_friend_request(entered_username):
                   f"(username1 = '{entered_username}' and username2 = '{user_account.username}')"
     cursor.execute(check_query)
     length = cursor.rowcount
-    if length != 0:
+    ##why not equal 0
+    if length == 0:
         cnx.close()
         return 0
 
@@ -343,15 +344,18 @@ class MainWindow:
         self.ui.suggested_friend_list_widget.clear()
         self.ui.flist_widget.clear()
 
+
     def goFriends(self):
         self.ui.stackedWidget.setCurrentWidget(self.ui.friends_page)
         self.ui.flist_widget.addItems(friends)
         self.ui.suggested_friend_list_widget.addItems(friends_of_friends)
+        self.ui.uname_addfriend.setText("")
 
     def goNoti(self):
         self.ui.stackedWidget.setCurrentWidget(self.ui.notis_page)
         self.ui.suggested_friend_list_widget.clear()
         self.ui.flist_widget.clear()
+        self.ui.uname_addfriend.setText("")
 
     def goSignUp(self):
         self.ui.stackedWidget.setCurrentWidget(self.ui.sign_up_page)
@@ -369,13 +373,15 @@ class MainWindow:
 
     def addFriendButton(self):
 
-        print('hey')
         usernameEntered = self.ui.uname_addfriend.text()
         result = send_friend_request(usernameEntered)
         print(result)
         if result == 1:
+            self.ui.add_friend_header.setText("Friend Request Sent!")
             print('yes')
         else:
+            self.ui.add_friend_header.setText("This isn't a valid username, try again!")
+            self.ui.uname_addfriend.setText("")
             print('no')
 
 
