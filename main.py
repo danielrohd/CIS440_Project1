@@ -2,6 +2,8 @@ import sys
 import datetime
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtWidgets import QMainWindow
+from PyQt5.QtWidgets import QTableWidgetItem
+from PyQt5.QtWidgets import QTableWidget
 from mysql import connector
 import userclass
 import event_class
@@ -273,6 +275,10 @@ class MainWindow:
         self.ui.log_out_button_2.clicked.connect(self.logOut)
         self.ui.log_out_button_3.clicked.connect(self.logOut)
 
+        self.ui.addEventButton.clicked.connect(self.goEventCreation)
+        self.ui.backToEventsButton.clicked.connect(self.goEvent)
+        self.ui.backToLoginButton.clicked.connect(self.logOut)
+
     def clickedLogin(self):
         global user_account
         self.main_win.show()
@@ -357,6 +363,9 @@ class MainWindow:
         pending_friends = []
         friends_of_friends = []
         self.ui.stackedWidget.setCurrentWidget(self.ui.log_in_page)
+
+    def goEventCreation(self):
+        self.ui.stackedWidget.setCurrentWidget(self.ui.create_event_page)
 
     def addFriendButton(self):
 
