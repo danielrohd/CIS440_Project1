@@ -51,13 +51,3 @@ class Event:
     @guests.setter
     def guests(self, guests_list):
         self.__guests = guests_list
-
-    def add_guest(self, username):
-        """Adds an account to the guest list"""
-        if username not in self.guests:
-            self.guests.append(username)
-
-    def remove_guest(self, username):
-        """Removes a guest from the guest list"""
-        if username in self.guests:
-            self.guests.remove(username)
