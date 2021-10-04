@@ -25,7 +25,7 @@ available_events = []
 def get_user_from_database(enteredUsername, enteredPassword):
     """Creates a user from the database"""
     cnx = connector.connect(user='fall2021group5', password='group5fall2021',
-                            host='107.180.1.16',
+                            host='107.180.1.16', port = '3306',
                             database='cis440fall2021group5')
     cursor = cnx.cursor()
     query = f"SELECT first_name, last_name, username, password, email FROM Users WHERE username='{enteredUsername}' " \
@@ -47,7 +47,7 @@ def get_host_events_from_database(host):
     """Gets event objects from database and creates a list of all events with given host"""
     event_list = []
     cnx = connector.connect(user='fall2021group5', password='group5fall2021',
-                            host='107.180.1.16',
+                            host='107.180.1.16', port = '3306',
                             database='cis440fall2021group5')
     cursor = cnx.cursor()
 
@@ -70,7 +70,7 @@ def get_host_events_from_database(host):
 def add_account_to_database(f_name, l_name, username, pw, email):
     """Function can be used to add a user to the database after an account has been created"""
     cnx = connector.connect(user='fall2021group5', password='group5fall2021',
-                            host='107.180.1.16',
+                            host='107.180.1.16', port = '3306',
                             database='cis440fall2021group5')
     cursor = cnx.cursor(buffered=True)
 
@@ -96,7 +96,7 @@ def create_friends_list():
     global user_account, friends
     friends = []
     cnx = connector.connect(user='fall2021group5', password='group5fall2021',
-                            host='107.180.1.16',
+                            host='107.180.1.16', port = '3306',
                             database='cis440fall2021group5')
     cursor = cnx.cursor(buffered=True)
 
@@ -117,7 +117,7 @@ def find_friend_requests():
     global user_account, pending_friends
     pending_friends = []
     cnx = connector.connect(user='fall2021group5', password='group5fall2021',
-                            host='107.180.1.16',
+                            host='107.180.1.16', port = '3306',
                             database='cis440fall2021group5')
     cursor = cnx.cursor(buffered=True)
 
@@ -135,7 +135,7 @@ def send_friend_request(entered_username):
     returns 0 if the username does not exist, and returns 2 if the request has already been sent"""
     global user_account
     cnx = connector.connect(user='fall2021group5', password='group5fall2021',
-                            host='107.180.1.16',
+                            host='107.180.1.16', port = '3306',
                             database='cis440fall2021group5')
     cursor = cnx.cursor(buffered=True)
 
@@ -171,7 +171,7 @@ def respond_to_friend_request(friend_username, accepted):
     """Accepts a friend request if accepted == True, otherwise denies"""
     global user_account
     cnx = connector.connect(user='fall2021group5', password='group5fall2021',
-                            host='107.180.1.16',
+                            host='107.180.1.16', port = '3306',
                             database='cis440fall2021group5')
     cursor = cnx.cursor(buffered=True)
 
@@ -192,7 +192,7 @@ def delete_friend(friend_username):
     """Lets user remove friends that are on their friends list"""
     global friends, user_account
     cnx = connector.connect(user='fall2021group5', password='group5fall2021',
-                            host='107.180.1.16',
+                            host='107.180.1.16', port = '3306',
                             database='cis440fall2021group5')
     cursor = cnx.cursor(buffered=True)
 
@@ -210,7 +210,7 @@ def delete_friend(friend_username):
 def find_friends_of_friends():
     global friends, friends_of_friends
     cnx = connector.connect(user='fall2021group5', password='group5fall2021',
-                            host='107.180.1.16',
+                            host='107.180.1.16', port = '3306',
                             database='cis440fall2021group5')
     cursor = cnx.cursor(buffered=True)
 
@@ -236,7 +236,7 @@ def find_available_events():
     connections = friends + friends_of_friends
     connections.append(user_account.username)
     cnx = connector.connect(user='fall2021group5', password='group5fall2021',
-                            host='107.180.1.16',
+                            host='107.180.1.16', port = '3306',
                             database='cis440fall2021group5')
     cursor = cnx.cursor(buffered=True)
     for f in connections:
@@ -257,7 +257,7 @@ def find_available_events():
 def get_guest_list(event_id):
     """Gets and returns the guest list for a specific event"""
     cnx = connector.connect(user='fall2021group5', password='group5fall2021',
-                            host='107.180.1.16',
+                            host='107.180.1.16', port = '3306',
                             database='cis440fall2021group5')
     cursor = cnx.cursor(buffered=True)
 
@@ -274,7 +274,7 @@ def get_guest_list(event_id):
 def modify_guest_list(event_id):
     """Either adds the user as a guest and returns 1, or removes them if they are already a guest and returns 0"""
     cnx = connector.connect(user='fall2021group5', password='group5fall2021',
-                            host='107.180.1.16',
+                            host='107.180.1.16', port = '3306',
                             database='cis440fall2021group5')
     cursor = cnx.cursor(buffered=True)
 
@@ -303,7 +303,7 @@ def modify_guest_list(event_id):
 def create_event(title, date, location):
     """Lets users create an event and upload it to the database"""
     cnx = connector.connect(user='fall2021group5', password='group5fall2021',
-                            host='107.180.1.16',
+                            host='107.180.1.16', port = '3306',
                             database='cis440fall2021group5')
     cursor = cnx.cursor(buffered=True)
 
@@ -319,7 +319,7 @@ def create_event(title, date, location):
 def does_user_exist(username):
     """Checks to see if a username already exists"""
     cnx = connector.connect(user='fall2021group5', password='group5fall2021',
-                            host='107.180.1.16',
+                            host='107.180.1.16', port='3306',
                             database='cis440fall2021group5')
     cursor = cnx.cursor(buffered=True)
 
