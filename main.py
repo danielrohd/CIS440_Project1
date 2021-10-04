@@ -409,9 +409,21 @@ class MainWindow:
         self.main_win.show()
 
     def goEvent(self):
+
         self.ui.stackedWidget.setCurrentWidget(self.ui.event_page)
         self.ui.suggested_friend_list_widget.clear()
         self.ui.flist_widget.clear()
+
+        #rowPosition = self.ui.eventTable.rowCount()
+        #self.ui.eventTable.insertRow(rowPosition)
+        self.ui.eventTable.setRowCount(len(available_events))
+        row = 0
+
+        for event in available_events:
+            rowPosition = self.ui.eventTable.rowCount()
+            self.ui.eventTable.insertRow(rowPosition)
+            self.ui.eventTable.setItem(rowPosition, 0, QTableWidgetItem("hey"))
+            row += 1
 
 
     def goFriends(self):
@@ -444,18 +456,18 @@ class MainWindow:
 
         usernameEntered = self.ui.uname_addfriend.text()
         result = send_friend_request(usernameEntered)
-        print(result)
+        ##print(result)
         if result == 1:
             self.ui.add_friend_header.setText("Friend Request Sent!")
-            print('yes')
+
         elif result == 2:
             self.ui.add_friend_header.setText("A request already exists with that user!")
             self.ui.uname_addfriend.setText("")
-            print('no')
+
         else:
             self.ui.add_friend_header.setText("This isn't a valid username, try again!")
             self.ui.uname_addfriend.setText("")
-            print('no')
+
 
 
 if __name__ == '__main__':

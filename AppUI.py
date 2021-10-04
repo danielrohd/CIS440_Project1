@@ -87,14 +87,16 @@ class Ui_MainWindow(object):
         self.stackedWidget.addWidget(self.sign_up_page)
         self.event_page = QtWidgets.QWidget()
         self.event_page.setObjectName("event_page")
+
+        ##here
         self.friends_tab = QtWidgets.QPushButton(self.event_page)
-        self.friends_tab.setGeometry(QtCore.QRect(10, 450, 111, 23))
+        self.friends_tab.setGeometry(QtCore.QRect(10,490, 111, 23))
         self.friends_tab.setObjectName("friends_tab")
         self.events_tab = QtWidgets.QPushButton(self.event_page)
-        self.events_tab.setGeometry(QtCore.QRect(160, 450, 111, 23))
+        self.events_tab.setGeometry(QtCore.QRect(160, 490, 111, 23))
         self.events_tab.setObjectName("events_tab")
         self.noti_tab = QtWidgets.QPushButton(self.event_page)
-        self.noti_tab.setGeometry(QtCore.QRect(310, 450, 111, 23))
+        self.noti_tab.setGeometry(QtCore.QRect(310, 490, 111, 23))
         self.noti_tab.setObjectName("noti_tab")
         self.event_title = QtWidgets.QLabel(self.event_page)
         self.event_title.setGeometry(QtCore.QRect(10, 10, 61, 21))
@@ -152,12 +154,21 @@ class Ui_MainWindow(object):
         self.addfriend_button = QtWidgets.QPushButton(self.friends_page)
         self.addfriend_button.setGeometry(QtCore.QRect(270, 440, 135, 23))
         self.addfriend_button.setObjectName("addfriend_button")
+
+        self.add_event_header = QtWidgets.QLabel(self.event_page)
+        self.add_event_header.setGeometry(QtCore.QRect(150, 410, 351, 20))
+        self.add_event_header.setFont(font)
+        self.add_event_header.setObjectName("add_event_header")
+
+
+
+
         self.stackedWidget.addWidget(self.friends_page)
         self.eventTable = QtWidgets.QTableWidget(self.event_page)
         self.eventTable.setGeometry(QtCore.QRect(-10, 100, 481, 281))
         self.eventTable.setObjectName("eventTable")
         self.eventTable.setColumnCount(4)
-        self.eventTable.setRowCount(0)
+        ##self.eventTable.setRowCount(0)
         item = QtWidgets.QTableWidgetItem()
         self.eventTable.setHorizontalHeaderItem(0, item)
         item = QtWidgets.QTableWidgetItem()
@@ -167,7 +178,7 @@ class Ui_MainWindow(object):
         item = QtWidgets.QTableWidgetItem()
         self.eventTable.setHorizontalHeaderItem(3, item)
         self.addEventButton = QtWidgets.QPushButton(self.event_page)
-        self.addEventButton.setGeometry(QtCore.QRect(180, 60, 75, 23))
+        self.addEventButton.setGeometry(QtCore.QRect(170, 440, 135, 23))
         self.addEventButton.setObjectName("addEventButton")
         self.stackedWidget.addWidget(self.event_page)
         self.create_event_page = QtWidgets.QWidget()
@@ -200,13 +211,13 @@ class Ui_MainWindow(object):
         self.notis_page = QtWidgets.QWidget()
         self.notis_page.setObjectName("notis_page")
         self.friends_tab_3 = QtWidgets.QPushButton(self.notis_page)
-        self.friends_tab_3.setGeometry(QtCore.QRect(10, 450, 111, 23))
+        self.friends_tab_3.setGeometry(QtCore.QRect(10,490, 111, 23))
         self.friends_tab_3.setObjectName("friends_tab_3")
         self.events_tab_3 = QtWidgets.QPushButton(self.notis_page)
-        self.events_tab_3.setGeometry(QtCore.QRect(160, 450, 111, 23))
+        self.events_tab_3.setGeometry(QtCore.QRect(160,490, 111, 23))
         self.events_tab_3.setObjectName("events_tab_3")
         self.noti_tab_3 = QtWidgets.QPushButton(self.notis_page)
-        self.noti_tab_3.setGeometry(QtCore.QRect(310, 450, 111, 23))
+        self.noti_tab_3.setGeometry(QtCore.QRect(310,490, 111, 23))
         self.noti_tab_3.setObjectName("noti_tab_3")
         self.log_out_button_3 = QtWidgets.QPushButton(self.friends_page)
         self.log_out_button_3.setGeometry(QtCore.QRect(340, 10, 81, 23))
@@ -283,6 +294,8 @@ class Ui_MainWindow(object):
         self.events_tab_3.setText(_translate("MainWindow", "Events"))
         self.noti_title.setText(_translate("MainWindow", "Notifications:"))
         self.log_out_button.setText(_translate("MainWindow", "Log Out"))
+        self.add_event_header.setText(_translate("MainWindow", "Click Below to Create a New Event"))
+
 
 
 if __name__ == "__main__":
