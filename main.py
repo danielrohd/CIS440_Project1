@@ -1,5 +1,4 @@
 import sys
-import datetime
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtWidgets import QMainWindow
 from PyQt5.QtWidgets import QTableWidgetItem
@@ -18,6 +17,8 @@ friends = []
 pending_friends = []
 # list of usernames who have mutual friends with the user
 friends_of_friends = []
+# list of all events that the user can see in their feed
+available_events = []
 
 
 def get_user_from_database(enteredUsername, enteredPassword):
@@ -222,6 +223,22 @@ def find_friends_of_friends():
 
     cnx.close()
 
+
+def find_available_events():
+    global available_events
+    connections = friends + friends_of_friends + user_account.username
+    cnx = connector.connect(user='fall2021group5', password='group5fall2021',
+                            host='107.180.1.16',
+                            database='cis440fall2021group5')
+    cursor = cnx.cursor(buffered=True)
+    for f in connections:
+        query = f"SELECT eventID, title, date, location, host FROM Events WHERE host = '{f}'"
+        cursor.execute(query)
+
+        for eventID, title, date, location, host in cursor:
+            temp_event = event_class.Event(eventID, title, date, location, host)
+            available_events.append(temp_event)
+    available_events.sort(key=lambda x: x.date)
 
 def does_user_exist(username):
     """Checks to see if a username already exists"""
