@@ -142,12 +142,13 @@ def send_friend_request(entered_username):
 
     # checking if friend request has been sent previously
     check_query = f"SELECT username1, username2 FROM Friends WHERE " \
-                  f"(username1 = '{user_account.username}' and username2 = '{entered_username}') or " \
-                  f"(username1 = '{entered_username}' and username2 = '{user_account.username}')"
+                  f"((username1 = '{user_account.username}' and username2 = '{entered_username}') or " \
+                  f"(username1 = '{entered_username}' and username2 = '{user_account.username}'))" \
+                  f"and status != 'Denied'"
     cursor.execute(check_query)
     length = cursor.rowcount
     # if length = 0, that means that these users do not already have a pending or accepted request
-    # if length is more than 0, the request is already pending/accepted/denied and wont be sent again
+    # if length is more than 0, the request is already pending/accepted and wont be sent again
     if length != 0:
         cnx.close()
         return 2
