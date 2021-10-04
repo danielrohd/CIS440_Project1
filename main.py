@@ -130,7 +130,8 @@ def find_friend_requests():
 
 
 def send_friend_request(entered_username):
-    """Sends a friend request to the user entered if the username exists and returns 1, otherwise returns 0"""
+    """Sends a friend request to the user entered if the username exists and returns 1,
+    returns 0 if the username does not exist, and returns 2 if the request has already been sent"""
     global user_account
     cnx = connector.connect(user='fall2021group5', password='group5fall2021',
                             host='107.180.1.16',
@@ -145,10 +146,11 @@ def send_friend_request(entered_username):
                   f"(username1 = '{entered_username}' and username2 = '{user_account.username}')"
     cursor.execute(check_query)
     length = cursor.rowcount
-    ##why not equal 0
-    if length == 0:
+    # if length = 0, that means that these users do not already have a pending or accepted request
+    # if length is more than 0, the request is already pending/accepted/denied and wont be sent again
+    if length != 0:
         cnx.close()
-        return 0
+        return 2
 
     if exists:
         add_query = f"INSERT INTO Friends (username1, username2, status) VALUES " \
@@ -239,8 +241,40 @@ def find_available_events():
 
         for eventID, title, date, location, host in cursor:
             temp_event = event_class.Event(eventID, title, date, location, host)
+            temp_event.guests = get_guest_list(eventID)
             available_events.append(temp_event)
     available_events.sort(key=lambda x: x.date)
+
+
+def get_guest_list(event_id):
+    """Gets and returns the guest list for a specific event"""
+    cnx = connector.connect(user='fall2021group5', password='group5fall2021',
+                            host='107.180.1.16',
+                            database='cis440fall2021group5')
+    cursor = cnx.cursor(buffered=True)
+
+    query = f"SELECT userID, eventID FROM Guests WHERE eventID = '{event_id}'"
+    cursor.execute(query)
+    temp_guest_list = []
+
+    for userID, eventID in cursor:
+        temp_guest_list.append(userID)
+
+    return temp_guest_list
+
+
+def modify_guest_list(event_id):
+    """Either adds the user as a guest, or removes them if they are already a guest"""
+    cnx = connector.connect(user='fall2021group5', password='group5fall2021',
+                            host='107.180.1.16',
+                            database='cis440fall2021group5')
+    cursor = cnx.cursor(buffered=True)
+
+    check_query = f"SELECT * from Guests WHERE userID = '{user_account.username}' and eventID = '{event_id}'"
+    cursor.execute(check_query)
+
+
+    query = f"INSERT INTO Guests (userID, eventID) VALUES ('{user_account.username}', '{event_id}')"
 
 
 def create_event(title, date, location):
