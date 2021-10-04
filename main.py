@@ -236,15 +236,15 @@ def find_available_events():
                             host='107.180.1.16',
                             database='cis440fall2021group5')
     cursor = cnx.cursor(buffered=True)
-    for f in connections:
+    for f in friends:
         query = f"SELECT eventID, title, date, location, host FROM Events WHERE host = '{f}'"
         cursor.execute(query)
 
         for eventID, title, date, location, host in cursor:
             temp_event = event_class.Event(eventID, title, date, location, host)
-            temp_event.guests = get_guest_list(eventID)
+            # temp_event.guests = get_guest_list(eventID)
             available_events.append(temp_event)
-    available_events.sort(key=lambda x: x.date)
+    # available_events.sort(key=lambda x: x.date)
 
 
 def get_guest_list(event_id):
@@ -331,6 +331,7 @@ def refresh_feed():
     create_friends_list()
     find_friend_requests()
     find_friends_of_friends()
+    find_available_events()
 
 
 class MainWindow:
