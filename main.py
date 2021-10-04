@@ -231,20 +231,21 @@ def find_friends_of_friends():
 def find_available_events():
     """Finds all events that were created by the user, their friends, and friends of friends"""
     global available_events
-    connections = friends + friends_of_friends + user_account.username
+    connections = friends + friends_of_friends
+    connections.append(user_account.username)
     cnx = connector.connect(user='fall2021group5', password='group5fall2021',
                             host='107.180.1.16',
                             database='cis440fall2021group5')
     cursor = cnx.cursor(buffered=True)
-    for f in friends:
+    for f in connections:
         query = f"SELECT eventID, title, date, location, host FROM Events WHERE host = '{f}'"
         cursor.execute(query)
 
         for eventID, title, date, location, host in cursor:
             temp_event = event_class.Event(eventID, title, date, location, host)
-            # temp_event.guests = get_guest_list(eventID)
+            temp_event.guests = get_guest_list(eventID)
             available_events.append(temp_event)
-    # available_events.sort(key=lambda x: x.date)
+    available_events.sort(key=lambda x: x.date)
 
 
 def get_guest_list(event_id):
