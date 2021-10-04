@@ -51,16 +51,16 @@ def get_host_events_from_database(host):
                             database='cis440fall2021group5')
     cursor = cnx.cursor()
 
-    query = f"SELECT title, date, location, host FROM Events WHERE host='{host}'"
+    query = f"SELECT eventID, title, date, location, host FROM Events WHERE host='{host}'"
     cursor.execute(query)
 
-    for title, date, location, host in cursor:
+    for eventID, title, date, location, host in cursor:
         if title is None:
             # this needs to properly handle if host has no events
             cnx.close()
             return 0
         else:
-            temp_event = event_class.Event(title, date, location, host)
+            temp_event = event_class.Event(eventID, title, date, location, host)
             event_list.append(temp_event)
             cnx.close()
 
@@ -280,7 +280,8 @@ def modify_guest_list(event_id):
 
     check_query = f"SELECT * from Guests WHERE userID = '{user_account.username}' and eventID = '{event_id}'"
     cursor.execute(check_query)
-    length = cursor.length
+    length = cursor.rowcount
+    print(length)
 
     if length == 0:
         query = f"INSERT INTO Guests (userID, eventID) VALUES ('{user_account.username}', '{event_id}')"
