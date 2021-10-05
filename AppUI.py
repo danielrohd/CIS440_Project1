@@ -90,13 +90,13 @@ class Ui_MainWindow(object):
 
         ##here
         self.friends_tab = QtWidgets.QPushButton(self.event_page)
-        self.friends_tab.setGeometry(QtCore.QRect(10,490, 111, 23))
+        self.friends_tab.setGeometry(QtCore.QRect(40,590, 111, 23))
         self.friends_tab.setObjectName("friends_tab")
         self.events_tab = QtWidgets.QPushButton(self.event_page)
-        self.events_tab.setGeometry(QtCore.QRect(160, 490, 111, 23))
+        self.events_tab.setGeometry(QtCore.QRect(190, 590, 111, 23))
         self.events_tab.setObjectName("events_tab")
         self.noti_tab = QtWidgets.QPushButton(self.event_page)
-        self.noti_tab.setGeometry(QtCore.QRect(310, 490, 111, 23))
+        self.noti_tab.setGeometry(QtCore.QRect(340, 590, 111, 23))
         self.noti_tab.setObjectName("noti_tab")
         self.event_title = QtWidgets.QLabel(self.event_page)
         self.event_title.setGeometry(QtCore.QRect(10, 10, 61, 21))
@@ -118,10 +118,10 @@ class Ui_MainWindow(object):
         self.noti_tab_2.setGeometry(QtCore.QRect(310,490, 111, 23))
         self.noti_tab_2.setObjectName("noti_tab_2")
         self.log_out_button_2 = QtWidgets.QPushButton(self.event_page)
-        self.log_out_button_2.setGeometry(QtCore.QRect(340, 10, 81, 23))
+        self.log_out_button_2.setGeometry(QtCore.QRect(400, 10, 81, 23))
         self.log_out_button_2.setObjectName("log_out_button_2")
         self.flist_title = QtWidgets.QLabel(self.friends_page)
-        self.flist_title.setGeometry(QtCore.QRect(10, 10, 81, 21))
+        self.flist_title.setGeometry(QtCore.QRect(10, 10, 121, 21))
         font = QtGui.QFont()
         font.setPointSize(12)
         self.flist_title.setFont(font)
@@ -135,12 +135,12 @@ class Ui_MainWindow(object):
         self.suggested_friend_list_widget.setObjectName("suggested_friend_list_widget")
 
         self.suggested_friend_list_title = QtWidgets.QLabel(self.friends_page)
-        self.suggested_friend_list_title.setGeometry(QtCore.QRect(10, 225, 181, 21))
+        self.suggested_friend_list_title.setGeometry(QtCore.QRect(10, 225, 281, 21))
         self.suggested_friend_list_title.setFont(font)
         self.suggested_friend_list_title.setObjectName("suggested_friend_list_title")
 
         self.add_friend_header = QtWidgets.QLabel(self.friends_page)
-        self.add_friend_header.setGeometry(QtCore.QRect(90, 410, 351, 20))
+        self.add_friend_header.setGeometry(QtCore.QRect(60, 410, 351, 20))
         self.add_friend_header.setFont(font)
         self.add_friend_header.setObjectName("add_friend_header")
 
@@ -157,7 +157,7 @@ class Ui_MainWindow(object):
         self.addfriend_button.setObjectName("addfriend_button")
 
         self.add_event_header = QtWidgets.QLabel(self.event_page)
-        self.add_event_header.setGeometry(QtCore.QRect(20, 410, 450, 20))
+        self.add_event_header.setGeometry(QtCore.QRect(60, 410, 450, 20))
         self.add_event_header.setFont(font)
         self.add_event_header.setObjectName("add_event_header")
 
@@ -181,10 +181,10 @@ class Ui_MainWindow(object):
         item = QtWidgets.QTableWidgetItem()
         self.eventTable.setHorizontalHeaderItem(4, item)
         self.addEventButton = QtWidgets.QPushButton(self.event_page)
-        self.addEventButton.setGeometry(QtCore.QRect(210, 440, 135, 23))
+        self.addEventButton.setGeometry(QtCore.QRect(240, 460, 135, 23))
         self.addEventButton.setObjectName("addEventButton")
         self.registerEventButton = QtWidgets.QPushButton(self.event_page)
-        self.registerEventButton.setGeometry(QtCore.QRect(70, 440, 135, 23))
+        self.registerEventButton.setGeometry(QtCore.QRect(100, 460, 135, 23))
         self.registerEventButton.setObjectName("registerEventButton")
 
         self.stackedWidget.addWidget(self.event_page)

@@ -595,7 +595,7 @@ class MainWindow:
     def logOut(self):
         global user_account, friends, pending_friends, friends_of_friends, available_events
         self.main_win.resize(487, 564)
-        self.ui.stackedWidget.resize(4877, 564)
+        self.ui.stackedWidget.resize(487, 564)
         user_account = 0
         friends = []
         pending_friends = []
@@ -605,6 +605,8 @@ class MainWindow:
 
     def goEventCreation(self):
         self.ui.stackedWidget.setCurrentWidget(self.ui.create_event_page)
+        self.main_win.resize(487, 564)
+        self.ui.stackedWidget.resize(487, 564)
 
     def addFriendButton(self):
 
