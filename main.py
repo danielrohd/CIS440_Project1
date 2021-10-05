@@ -1,12 +1,13 @@
 import sys
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtWidgets import QMainWindow
-from PyQt5.QtWidgets import QTableWidgetItem
+from PyQt5.QtWidgets import QTableWidgetItem, QAbstractItemView
 from PyQt5.QtWidgets import QTableWidget
 from mysql import connector
 import userclass
 import event_class
 import datetime
+
 
 from AppUI import Ui_MainWindow
 
@@ -373,6 +374,7 @@ class MainWindow:
         self.ui.backToEventsButton.clicked.connect(self.goEvent)
         self.ui.backToLoginButton.clicked.connect(self.logOut)
         self.ui.publishEventButton.clicked.connect(self.createEvent)
+        self.ui.registerEventButton.clicked.connect(self.registerEvent)
 
     def clickedLogin(self):
         global user_account
@@ -435,6 +437,7 @@ class MainWindow:
 
     def goEvent(self):
 
+        self.ui.eventTable.setSelectionBehavior(QAbstractItemView.SelectRows)
         self.ui.stackedWidget.setCurrentWidget(self.ui.event_page)
         self.ui.suggested_friend_list_widget.clear()
         self.ui.flist_widget.clear()
@@ -470,7 +473,35 @@ class MainWindow:
         self.ui.stackedWidget.setCurrentWidget(self.ui.sign_up_page)
 
     def createEvent(self):
-        print('hey')
+        entered_location = self.ui.location.text()
+        entered_date_time = self.ui.dateTime.text()
+        entered_description = self.ui.description.text()
+
+        print(entered_location)
+        print(entered_date_time)
+        print(entered_description)
+
+        create_event(entered_description, entered_date_time, entered_location)
+
+        self.ui.location.setText("")
+        self.ui.dateTime.setText("")
+        self.ui.description.setText("")
+        self.goEvent()
+
+    def registerEvent(self):
+
+        selectedRow = self.ui.eventTable.currentIndex().row()
+        eventId = available_events[selectedRow].event_id
+        result = modify_guest_list(eventId)
+        if result == 1:
+            print('registered')
+            self.ui.add_event_header.setText("You are now registered")
+            # say registered
+        elif result == 0:
+            print('unregistered')
+            self.ui.add_event_header.setText("You are now not registered for that event")
+            # say unregistered
+
 
 
     def logOut(self):

@@ -180,6 +180,10 @@ class Ui_MainWindow(object):
         self.addEventButton = QtWidgets.QPushButton(self.event_page)
         self.addEventButton.setGeometry(QtCore.QRect(210, 440, 135, 23))
         self.addEventButton.setObjectName("addEventButton")
+        self.registerEventButton = QtWidgets.QPushButton(self.event_page)
+        self.registerEventButton.setGeometry(QtCore.QRect(70, 440, 135, 23))
+        self.registerEventButton.setObjectName("registerEventButton")
+
         self.stackedWidget.addWidget(self.event_page)
         self.create_event_page = QtWidgets.QWidget()
         self.create_event_page.setObjectName("create_event_page")
@@ -294,7 +298,8 @@ class Ui_MainWindow(object):
         self.events_tab_3.setText(_translate("MainWindow", "Events"))
         self.noti_title.setText(_translate("MainWindow", "Notifications:"))
         self.log_out_button.setText(_translate("MainWindow", "Log Out"))
-        self.add_event_header.setText(_translate("MainWindow", "Click Below to Create a New Event"))
+        self.registerEventButton.setText(_translate("MainWindow", "Register Event"))
+        self.add_event_header.setText(_translate("MainWindow", "Click Below to Create or Register for Event"))
 
 
 
