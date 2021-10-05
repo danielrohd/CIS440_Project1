@@ -156,7 +156,7 @@ class Ui_MainWindow(object):
         self.addfriend_button.setObjectName("addfriend_button")
 
         self.add_event_header = QtWidgets.QLabel(self.event_page)
-        self.add_event_header.setGeometry(QtCore.QRect(150, 410, 351, 20))
+        self.add_event_header.setGeometry(QtCore.QRect(20, 410, 450, 20))
         self.add_event_header.setFont(font)
         self.add_event_header.setObjectName("add_event_header")
 
@@ -178,7 +178,7 @@ class Ui_MainWindow(object):
         item = QtWidgets.QTableWidgetItem()
         self.eventTable.setHorizontalHeaderItem(3, item)
         self.addEventButton = QtWidgets.QPushButton(self.event_page)
-        self.addEventButton.setGeometry(QtCore.QRect(170, 440, 135, 23))
+        self.addEventButton.setGeometry(QtCore.QRect(210, 440, 135, 23))
         self.addEventButton.setObjectName("addEventButton")
         self.stackedWidget.addWidget(self.event_page)
         self.create_event_page = QtWidgets.QWidget()

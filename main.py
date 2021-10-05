@@ -281,7 +281,6 @@ def modify_guest_list(event_id):
     check_query = f"SELECT * from Guests WHERE userID = '{user_account.username}' and eventID = '{event_id}'"
     cursor.execute(check_query)
     length = cursor.rowcount
-    print(length)
 
     if length == 0:
         query = f"INSERT INTO Guests (userID, eventID) VALUES ('{user_account.username}', '{event_id}')"
