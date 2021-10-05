@@ -149,6 +149,7 @@ class Ui_MainWindow(object):
         self.uname_addfriend.setGeometry(QtCore.QRect(90, 440, 151, 20))
         self.uname_addfriend.setObjectName("uname_addfriend")
         self.uname_addfriend_label = QtWidgets.QLabel(self.friends_page)
+        self.uname_addfriend_label = QtWidgets.QLabel(self.friends_page)
         self.uname_addfriend_label.setGeometry(QtCore.QRect(20, 440, 61, 16))
         self.uname_addfriend_label.setObjectName("uname_addfriend_label")
         self.addfriend_button = QtWidgets.QPushButton(self.friends_page)

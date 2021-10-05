@@ -375,6 +375,8 @@ class MainWindow:
         self.ui.backToLoginButton.clicked.connect(self.logOut)
         self.ui.publishEventButton.clicked.connect(self.createEvent)
         self.ui.registerEventButton.clicked.connect(self.registerEvent)
+        self.ui.acceptRequestButton.clicked.connect(self.acceptRequest)
+        self.ui.declineRequestButton.clicked.connect(self.denyRequest)
 
     def clickedLogin(self):
         global user_account
@@ -501,6 +503,13 @@ class MainWindow:
             print('unregistered')
             self.ui.add_event_header.setText("You are now not registered for that event")
             # say unregistered
+
+    def acceptRequest(self):
+        print('hey')
+
+
+    def denyRequest(self):
+        print('hey');
 
 
 
