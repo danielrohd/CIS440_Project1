@@ -430,6 +430,8 @@ class MainWindow:
             user_account = result
             refresh_feed()
             # reset text boxes to be blank
+            self.main_win.resize(657, 664)
+            self.ui.stackedWidget.resize(657,664)
             self.ui.username.setText("")
             self.ui.password.setText("")
 
@@ -469,6 +471,9 @@ class MainWindow:
 
     def goEvent(self):
 
+        self.main_win.resize(657, 664)
+        self.ui.stackedWidget.resize(657, 664)
+
         self.ui.eventTable.setSelectionBehavior(QAbstractItemView.SelectRows)
         self.ui.stackedWidget.setCurrentWidget(self.ui.event_page)
         self.ui.suggested_friend_list_widget.clear()
@@ -486,6 +491,12 @@ class MainWindow:
             self.ui.eventTable.setItem(row, 1, QTableWidgetItem(date))
             self.ui.eventTable.setItem(row, 2, QTableWidgetItem(event.location))
             self.ui.eventTable.setItem(row, 3, QTableWidgetItem(event.host))
+            isRegistered = is_registered(event.event_id)
+
+            if isRegistered:
+                self.ui.eventTable.setItem(row, 4, QTableWidgetItem("Yes"))
+            else:
+                self.ui.eventTable.setItem(row, 4, QTableWidgetItem("No"))
             row += 1
 
 
@@ -509,8 +520,22 @@ class MainWindow:
         self.ui.flist_widget.clear()
         self.ui.uname_addfriend.setText("")
 
+        self.ui.notisTable.setSelectionBehavior(QAbstractItemView.SelectRows)
+        self.ui.notisTable.setRowCount(len(pending_friends))
+        row = 0
+
+        for user in pending_friends:
+            self.ui.notisTable.setItem(row, 0, QTableWidgetItem(user))
+            self.ui.notisTable.setItem(row, 1, QTableWidgetItem("Pending"))
+            row += 1
+
+
+
     def goSignUp(self):
         self.ui.stackedWidget.setCurrentWidget(self.ui.sign_up_page)
+
+
+
 
     def createEvent(self):
         entered_location = self.ui.location.text()
@@ -568,7 +593,9 @@ class MainWindow:
             self.goNoti()
 
     def logOut(self):
-        global user_account, friends, pending_friends, friends_of_friends
+        global user_account, friends, pending_friends, friends_of_friends, available_events
+        self.main_win.resize(487, 564)
+        self.ui.stackedWidget.resize(4877, 564)
         user_account = 0
         friends = []
         pending_friends = []
