@@ -301,6 +301,23 @@ def modify_guest_list(event_id):
         return 0
 
 
+def is_registered(eventID):
+    """Checks if the user is registered for the specified event"""
+    cnx = connector.connect(user='fall2021group5', password='group5fall2021',
+                            host='107.180.1.16', port='3306',
+                            database='cis440fall2021group5')
+    cursor = cnx.cursor(buffered=True)
+
+    query = f"SELECT * from Guests where userID = '{user_account.username}' and eventID = '{eventID}'"
+    cursor.execute(query)
+    length = cursor.rowcount
+
+    if length == 1:
+        return True
+    elif length == 0:
+        return False
+
+
 def create_event(title, date, location):
     """Lets users create an event and upload it to the database"""
     cnx = connector.connect(user='fall2021group5', password='group5fall2021',
@@ -311,6 +328,19 @@ def create_event(title, date, location):
     creation_query = f"INSERT INTO Events (title, date, location, host) VALUES" \
                      f"('{title}', '{date}', '{location}', '{user_account.username}')"
     cursor.execute(creation_query)
+    cnx.commit()
+
+    get_id = f"SELECT eventID from Events where title='{title}' and date='{date}' and location='{location}' " \
+             f"and host='{user_account.username}'"
+    cursor.execute(get_id)
+
+    temp_id = 0
+    for eventID in cursor:
+        temp_id = eventID
+    print(temp_id[0])
+
+    guest_query = f"INSERT INTO Guests (userID, eventID) values ('{user_account.username}', '{temp_id[0]}')"
+    cursor.execute(guest_query)
 
     cnx.commit()
     cursor.close()
@@ -460,12 +490,20 @@ class MainWindow:
 
 
     def goFriends(self):
+        find_friends_of_friends()
+        create_friends_list()
+        self.main_win.resize(487, 564)
+        self.ui.stackedWidget.resize(487, 564)
         self.ui.stackedWidget.setCurrentWidget(self.ui.friends_page)
         self.ui.flist_widget.addItems(friends)
         self.ui.suggested_friend_list_widget.addItems(friends_of_friends)
         self.ui.uname_addfriend.setText("")
 
     def goNoti(self):
+        find_friend_requests()
+        ##resize
+        self.main_win.resize(487, 564)
+        self.ui.stackedWidget.resize(487, 564)
         self.ui.stackedWidget.setCurrentWidget(self.ui.notis_page)
         self.ui.suggested_friend_list_widget.clear()
         self.ui.flist_widget.clear()
@@ -501,17 +539,33 @@ class MainWindow:
             # say registered
         elif result == 0:
             print('unregistered')
-            self.ui.add_event_header.setText("You are now not registered for that event")
+            self.ui.add_event_header.setText("You are now unregistered for that event")
             # say unregistered
+        self.goEvent()
 
     def acceptRequest(self):
-        print('hey')
+        global pending_friends
 
+        selectedRow = self.ui.notisTable.currentIndex().row()
+        if selectedRow < 0:
+            self.goNoti()
+        else:
+            username = pending_friends[selectedRow]
+            respond_to_friend_request(username, True)
+            pending_friends.remove(username)
+            self.goNoti()
 
     def denyRequest(self):
-        print('hey');
+        global pending_friends
 
-
+        selectedRow = self.ui.notisTable.currentIndex().row()
+        if selectedRow < 0:
+            self.goNoti()
+        else:
+            username = pending_friends[selectedRow]
+            respond_to_friend_request(username, False)
+            pending_friends.remove(username)
+            self.goNoti()
 
     def logOut(self):
         global user_account, friends, pending_friends, friends_of_friends
@@ -519,6 +573,7 @@ class MainWindow:
         friends = []
         pending_friends = []
         friends_of_friends = []
+        available_events = []
         self.ui.stackedWidget.setCurrentWidget(self.ui.log_in_page)
 
     def goEventCreation(self):

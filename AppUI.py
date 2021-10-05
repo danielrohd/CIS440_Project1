@@ -239,7 +239,7 @@ class Ui_MainWindow(object):
         self.log_out_button.setGeometry(QtCore.QRect(340, 10, 81, 23))
         self.log_out_button.setObjectName("log_out_button")
         self.notisTable = QtWidgets.QTableWidget(self.notis_page)
-        self.notisTable.setGeometry(QtCore.QRect(110, 50, 211, 301))
+        self.notisTable.setGeometry(QtCore.QRect(110, 50, 250, 301))
         self.notisTable.setObjectName("notisTable")
         self.notisTable.setColumnCount(2)
         self.notisTable.setRowCount(0)
