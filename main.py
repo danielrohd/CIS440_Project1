@@ -1,3 +1,10 @@
+"""
+Team 5
+Project Owner: Phuong Do
+Scrum Master: Matthew Stephens
+Developers: Daniel Rohd, Brianna Poole, Chad Porter
+"""
+
 import sys
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtWidgets import QMainWindow
